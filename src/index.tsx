@@ -135,7 +135,6 @@ class Application extends React.Component<{}, State> {
 
   private handleSubmit(event: React.FormEvent<HTMLFormElement>, data: FormProps) {
     event.preventDefault();
-    console.log(this.state.userName);
     this.setState({ randomFetching: true });
     const uri = 'https://kenkoooo.com/atcoder/atcoder-api/results?user=' + this.state.userName;
     axios.get(uri)
@@ -149,11 +148,8 @@ class Application extends React.Component<{}, State> {
         });
         const len = validProblems.length;
         const randomOne = validProblems[Math.floor(Math.random() * len)];
-        console.log(randomOne);
         const contestId = randomOne.contest_id;
         const problemId = randomOne.problem_id;
-        console.log(contestId);
-        console.log(problemId);
         const contestTitle = this.state.contestTitle[contestId];
         const problemTitle = this.state.problemTitle[problemId];
         const newProblem = [{
@@ -173,7 +169,6 @@ class Application extends React.Component<{}, State> {
   }
 
   private handleChange(event: React.SyntheticEvent<HTMLInputElement>, data: InputOnChangeData) {
-    // console.log(data);
     if (data.name === 'input') {
       this.setState({ userName: data.value });
     } else {
@@ -184,7 +179,7 @@ class Application extends React.Component<{}, State> {
       }
     }
   }
-  
+
   private handleClick(event: React.MouseEvent<HTMLElement>) { // これでいいのか
     this.setState({
       userName: '',
