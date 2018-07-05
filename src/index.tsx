@@ -80,8 +80,8 @@ class Application extends React.Component<{}, State> {
     return (
       <Container style={{ margin: '2rem' }}>
         <DimmerDimmable dimmed={isLoading}>
-          <Header as={'h1'} dividing={true} onClick={this.handleClick} style={{ cursor: 'pointer' }}>
-            Second AC
+          <Header as={'h1'} dividing={true}>
+            <span onClick={this.handleClick} style={{ cursor: 'pointer' }}> Second AC </span>
           </Header>
           <Dimmer active={isLoading} inverted={true}>
             <Loader>Loading...</Loader>
@@ -93,10 +93,10 @@ class Application extends React.Component<{}, State> {
               </FormField>
               <FormField style={fieldStyle}>
                 <Dropdown placeholder={'lowerbound'} search={true} selection={true} options={this.options} onChange={this.handleChange} value={this.state.problemLB} />
-                <Label content={'lowerbound'} pointing={true}/>
+                <Label content={'lowerbound'} pointing={true} />
               </FormField>
               <FormField style={fieldStyle}>
-                <Dropdown placeholder={'upperbound'} search={true} selection={true} options={this.options} onChange={this.handleChange} value={this.state.problemUB}/>
+                <Dropdown placeholder={'upperbound'} search={true} selection={true} options={this.options} onChange={this.handleChange} value={this.state.problemUB} />
                 <Label content={'upperbound'} pointing={true} />
               </FormField>
               <FormField style={fieldStyle}>
