@@ -6,6 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 import { Container, Form, FormGroup, FormInput, DropdownItemProps, Dropdown, FormField, FormButton, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell, FormProps, InputOnChangeData, Label, DimmerDimmable, Dimmer, Loader, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const fieldStyle = {
   marginBottom: '1rem'
@@ -79,6 +81,7 @@ class Application extends React.Component<{}, State> {
     const isLoading = this.state.sucCount < 2;
     return (
       <Container style={{ margin: '2rem' }}>
+        <ToastContainer hideProgressBar={true}/>
         <DimmerDimmable dimmed={isLoading}>
           <Header as={'h1'} dividing={true}>
             <span onClick={this.handleClick} style={{ cursor: 'pointer' }}> Second AC </span>
@@ -162,7 +165,8 @@ class Application extends React.Component<{}, State> {
           }];
           const problems = newProblem.concat(this.state.problems);
           this.setState({ randomFetching: false, problems });
-        }else{
+        } else {
+          toast.warn(`指定したユーザ名 ${this.state.userName} は存在しません`)
           this.setState({ randomFetching: false });
         }
       }).catch((err) => {
@@ -197,7 +201,7 @@ class Application extends React.Component<{}, State> {
 }
 
 ReactDOM.render(
-  <Application />,
+    <Application />,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
