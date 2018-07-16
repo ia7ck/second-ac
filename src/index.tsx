@@ -139,28 +139,32 @@ class Application extends React.Component<{}, State> {
     const uri = 'https://kenkoooo.com/atcoder/atcoder-api/results?user=' + this.state.userName;
     axios.get(uri)
       .then((results) => {
-        const validProblems = results.data.filter((problem: any) => {
-          return (
-            this.state.problemLB <= problem.point &&
-            problem.point <= this.state.problemUB &&
-            problem.result === 'AC'
-          );
-        });
-        const len = validProblems.length;
-        const randomOne = validProblems[Math.floor(Math.random() * len)];
-        const contestId = randomOne.contest_id;
-        const problemId = randomOne.problem_id;
-        const contestTitle = this.state.contestTitle[contestId];
-        const problemTitle = this.state.problemTitle[problemId];
-        const newProblem = [{
-          userName: this.state.userName,
-          contestTitle,
-          problemTitle,
-          url: `https://beta.atcoder.jp/contests/${contestId}/tasks/${problemId}`,
-          point: randomOne.point
-        }];
-        const problems = newProblem.concat(this.state.problems);
-        this.setState({ randomFetching: false, problems });
+        if (results.data.length > 0) {
+          const validProblems = results.data.filter((problem: any) => {
+            return (
+              this.state.problemLB <= problem.point &&
+              problem.point <= this.state.problemUB &&
+              problem.result === 'AC'
+            );
+          });
+          const len = validProblems.length;
+          const randomOne = validProblems[Math.floor(Math.random() * len)];
+          const contestId = randomOne.contest_id;
+          const problemId = randomOne.problem_id;
+          const contestTitle = this.state.contestTitle[contestId];
+          const problemTitle = this.state.problemTitle[problemId];
+          const newProblem = [{
+            userName: this.state.userName,
+            contestTitle,
+            problemTitle,
+            url: `https://beta.atcoder.jp/contests/${contestId}/tasks/${problemId}`,
+            point: randomOne.point
+          }];
+          const problems = newProblem.concat(this.state.problems);
+          this.setState({ randomFetching: false, problems });
+        }else{
+          this.setState({ randomFetching: false });
+        }
       }).catch((err) => {
         console.log('error');
         console.error(err);
