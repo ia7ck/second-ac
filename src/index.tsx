@@ -49,7 +49,7 @@ class Application extends React.Component<{}, State> {
   }
 
   public componentWillMount() {
-    axios.get('https://kenkoooo.com/atcoder/atcoder-api/info/contests')
+    axios.get('https://kenkoooo.com/atcoder/resources/contests.json')
       .then((results) => {
         const contestTitle: { [key: string]: string } = {}; // const?
         results.data.forEach((contest: any) => {
@@ -58,13 +58,11 @@ class Application extends React.Component<{}, State> {
         const newCount = this.state.sucCount + 1;
         this.setState({ contestTitle, sucCount: newCount });
       }).catch((err) => {
-        console.log('error');
         console.error(err);
       });
 
-    axios.get('https://kenkoooo.com/atcoder/atcoder-api/info/problems')
+    axios.get('https://kenkoooo.com/atcoder/resources/problems.json')
       .then((results) => {
-        // console.log(results);
         const problemTitle: { [key: string]: string } = {};
         results.data.forEach((problem: any) => {
           problemTitle[problem.id] = problem.title;
@@ -72,7 +70,6 @@ class Application extends React.Component<{}, State> {
         const newCount = this.state.sucCount + 1;
         this.setState({ problemTitle, sucCount: newCount });
       }).catch((err) => {
-        console.log('error');
         console.error(err);
       });
   }
@@ -81,7 +78,7 @@ class Application extends React.Component<{}, State> {
     const isLoading = this.state.sucCount < 2;
     return (
       <Container style={{ margin: '2rem' }}>
-        <ToastContainer hideProgressBar={true}/>
+        <ToastContainer hideProgressBar={true} />
         <DimmerDimmable dimmed={isLoading}>
           <Header as={'h1'} dividing={true}>
             <span onClick={this.handleClick} style={{ cursor: 'pointer' }}> Second AC </span>
@@ -160,7 +157,7 @@ class Application extends React.Component<{}, State> {
             userName: this.state.userName,
             contestTitle,
             problemTitle,
-            url: `https://beta.atcoder.jp/contests/${contestId}/tasks/${problemId}`,
+            url: `https://atcoder.jp/contests/${contestId}/tasks/${problemId}`,
             point: randomOne.point
           }];
           const problems = newProblem.concat(this.state.problems);
@@ -170,7 +167,6 @@ class Application extends React.Component<{}, State> {
           this.setState({ randomFetching: false });
         }
       }).catch((err) => {
-        console.log('error');
         console.error(err);
         this.setState({ randomFetching: false });
       });
@@ -201,7 +197,7 @@ class Application extends React.Component<{}, State> {
 }
 
 ReactDOM.render(
-    <Application />,
+  <Application />,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
